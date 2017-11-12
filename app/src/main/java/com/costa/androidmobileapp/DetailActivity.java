@@ -72,7 +72,7 @@ public class DetailActivity extends AppCompatActivity {
 
         final Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        
+
         intent.putExtra(Intent.EXTRA_SUBJECT, "Event Information");
         intent.putExtra(Intent.EXTRA_TEXT, eventName.getText().toString());
         fab.setOnClickListener(new View.OnClickListener() {
