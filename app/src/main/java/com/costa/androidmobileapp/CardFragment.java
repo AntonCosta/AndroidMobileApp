@@ -100,18 +100,19 @@ public class CardFragment extends Fragment {
             holder.setItemClickListener(new ItemClickListener() {
                 @Override
                 public void onItemClick() {
-                    openDetailActivity(event.getCardName(), event.getImageResourceId(), position);
+                    openDetailActivity(event.getCardName(), event.getImageResourceId(), position, event.getIdEvent());
                 }
             });
         }
 
-        public void openDetailActivity(String title, Integer tag, int position) {
+        public void openDetailActivity(String title, Integer tag, int position, int eventId) {
             Intent i = new Intent(c, DetailActivity.class);
 
             //PACK DATA
             i.putExtra("TITLE_KEY", title);
             i.putExtra("TAG_KEY", tag);
             i.putExtra("POSITION_KEY", position);
+            i.putExtra("EVENT_ID",eventId);
 
             c.startActivity(i);
         }
@@ -145,13 +146,31 @@ public class CardFragment extends Fragment {
         }
     }
 
+
     public void initializeList() {
+        ArrayList<Event> events = new TableControllerEvents(this.getContext()).read();
         listitems.clear();
-        for (int i = 0; i < 6; i++) {
+        for (Event obj : events) {
+
+            /*int id = obj.getIdEvent();
+            String eventName = obj.getCardName();
+            int nrOfPeople = obj.getNrOfPeople();
+            String orgName = obj.getNameOrganizor();
+            String location = obj.getLocation();
+            int imageId = obj.getImageResourceId();*/
+
+            // To change after added image dbs, maybe
+
+            obj.setImageResourceId(Images[obj.getImageResourceId()]);
+            listitems.add(obj);
+
+        }
+
+      /*  for (int i = 0; i < 6; i++) {
             Event item = new Event();
             item.setCardName(Events[i]);
             item.setImageResourceId(Images[i]);
             listitems.add(item);
-        }
+        }*/
     }
 }

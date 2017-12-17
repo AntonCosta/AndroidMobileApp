@@ -26,7 +26,11 @@
             android:name=".DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ContactUsActivity"></activity>
+        <activity
+            android:name=".CreateEvent"
+            android:label="CreateEvent"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

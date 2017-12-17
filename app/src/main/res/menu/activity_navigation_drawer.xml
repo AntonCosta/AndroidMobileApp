@@ -5,14 +5,14 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/viewgallery"
-            android:title="View Gallery" />
+            android:id="@+id/navigateEvents"
+            android:title="Navigate Events" />
         <item
-            android:id="@+id/ourlocations"
-            android:title="Our Locations" />
+            android:id="@+id/createEvent"
+            android:title="Create Event" />
         <item
-            android:id="@+id/testimonials"
-            android:title="Testimonials" />
+            android:id="@+id/statistics"
+            android:title="Statistics" />
         <item
             android:id="@+id/contactus"
             android:title="Contact Us" />

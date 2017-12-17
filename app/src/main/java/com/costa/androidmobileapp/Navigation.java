@@ -26,25 +26,6 @@ public class Navigation extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-      /*  FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-     //   final Intent intent = new Intent(this, ContactUsActivity.class);
-
-        final Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { "some@email.address" });
-        intent.putExtra(Intent.EXTRA_SUBJECT, "subject");
-        intent.putExtra(Intent.EXTRA_TEXT, "mail body");
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        });*/
-
-
-       // startActivity(Intent.createChooser(intent, ""));
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -73,7 +54,8 @@ public class Navigation extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -105,11 +87,11 @@ public class Navigation extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.viewgallery) {
-            // Handle the camera action
-        } else if (id == R.id.ourlocations) {
-
-        } else if (id == R.id.testimonials) {
+        if (id == R.id.navigateEvents) {
+        } else if (id == R.id.createEvent) {
+            Intent intent = new Intent(this, CreateEvent.class);
+            startActivity(intent);
+        } else if (id == R.id.review) {
 
         } else if (id == R.id.contactus) {
 
@@ -123,4 +105,5 @@ public class Navigation extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 }
