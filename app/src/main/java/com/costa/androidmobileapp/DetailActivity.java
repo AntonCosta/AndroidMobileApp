@@ -1,7 +1,10 @@
 package com.costa.androidmobileapp;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -84,18 +87,40 @@ public class DetailActivity extends AppCompatActivity {
 
     public void deleteBtnClick(View view)
     {
-        Context context = view.getContext();
-        boolean deleteSuccessful = new TableControllerEvents(context).delete(eventId);
-
-        if (deleteSuccessful){
-            Toast.makeText(context, "Event was deleted.", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(context, "Unable to delete event.", Toast.LENGTH_SHORT).show();
+        final Context context = view.getContext();
+        final Intent intent = new Intent(this, Navigation.class);
+        AlertDialog.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+        } else {
+            builder = new AlertDialog.Builder(context);
         }
-        Intent intent = new Intent(this, Navigation.class);
-        startActivity(intent);
+        builder.setTitle("Delete event")
+                .setMessage("Are you sure you want to delete this event?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        boolean deleteSuccessful = new TableControllerEvents(context).delete(eventId);
+
+                        if (deleteSuccessful) {
+                            Toast.makeText(context, "Event was deleted.", Toast.LENGTH_SHORT).show();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(context, "Unable to delete event.", Toast.LENGTH_SHORT).show();
+                        }
+                        }
+                    })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+
 
     }
+
 
     public void mailBtnClick(View view)
     {

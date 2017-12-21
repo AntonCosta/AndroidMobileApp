@@ -30,6 +30,10 @@
             android:name=".CreateEvent"
             android:label="CreateEvent"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Statistics"
+            android:label="Statistics"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 

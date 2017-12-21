@@ -91,8 +91,9 @@ public class Navigation extends AppCompatActivity
         } else if (id == R.id.createEvent) {
             Intent intent = new Intent(this, CreateEvent.class);
             startActivity(intent);
-        } else if (id == R.id.review) {
-
+        } else if (id == R.id.statistics) {
+            Intent intent = new Intent(this, Statistics.class);
+            startActivity(intent);
         } else if (id == R.id.contactus) {
 
         } else if (id == R.id.nav_share) {
