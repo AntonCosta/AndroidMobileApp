@@ -1,4 +1,4 @@
-package com.costa.androidmobileapp;
+package com.costa.androidmobileapp.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -38,7 +38,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 "(Library, 10, Bibleoteca, Costa, 0)";
 
         db.execSQL(sql);
-        db.execSQL(sql1);
+       // db.execSQL(sql1);
 
     }
 

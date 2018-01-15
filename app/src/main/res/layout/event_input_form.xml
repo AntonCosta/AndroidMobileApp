@@ -64,15 +64,5 @@
         android:inputType="textPersonName"
         android:text="Location" />
 
-    <Button
-        android:id="@+id/buttonCreateEvent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/eventNameEditText"
-        android:layout_marginTop="241dp"
-        android:text="Create Event"
-        android:onClick="createBtnClick"
-        android:layout_alignLeft="@+id/eventNameEditText" />
 
 </RelativeLayout>

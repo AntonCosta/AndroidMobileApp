@@ -34,6 +34,26 @@
             android:name=".Statistics"
             android:label="Statistics"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".UserActivity"
+            android:label="UserActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".AdminActivity"
+            android:label="AdminActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <service android:name=".Notification.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".Notification.FirebaseIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
 
     </application>
 

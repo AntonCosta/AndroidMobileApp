@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.costa.androidmobileapp.Database.DatabaseHandler;
 import com.costa.androidmobileapp.Model.Event;
 
 import java.util.ArrayList;

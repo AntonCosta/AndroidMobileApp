@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "178837030348",
+    "firebase_url": "https://androidmobileapp-d3f60.firebaseio.com",
+    "project_id": "androidmobileapp-d3f60",
+    "storage_bucket": "androidmobileapp-d3f60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:178837030348:android:13323b15ceeb86b7",
+        "android_client_info": {
+          "package_name": "com.costa.androidmobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "178837030348-sutb211389dvdrtptd7bsbckp7loso55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo9cec9yN-x2PecOxG_qr50P7BEJhQIEU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

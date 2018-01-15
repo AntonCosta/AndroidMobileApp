@@ -4,35 +4,42 @@ package com.costa.androidmobileapp;
  * Created by CristianCosmin on 08.11.2017.
  */
 
-import android.content.ContentResolver;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Map;
 
+import com.costa.androidmobileapp.Listener.ItemClickListener;
 import com.costa.androidmobileapp.Model.Event;
+import com.costa.androidmobileapp.Service.RemoteEventServiceImpl;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 
-public class CardFragment extends Fragment {
+public class CardFragment extends Fragment implements  Observer{
 
     ArrayList<Event> listitems = new ArrayList<>();
     RecyclerView MyRecyclerView;
     String Events[] = {"Library", "Morning Cofee", "Birthday Party", "Gym night", "Concert Flying", "Quiz Londoner"};
     int Images[] = {R.drawable.book, R.drawable.coffee_cup_md, R.drawable.party_popper, R.drawable.weight_lifting, R.drawable.flying_circus, R.drawable.londoner};
+    private RemoteEventServiceImpl.RemoteEventServiceInterface remoteService = RemoteEventServiceImpl.getInstance();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +51,9 @@ public class CardFragment extends Fragment {
                 Events[posAtWhichToChange] = titleToChange;
             }
         }
+
         initializeList();
+
     }
 
     @Override
@@ -62,6 +71,24 @@ public class CardFragment extends Fragment {
         MyRecyclerView.setLayoutManager(MyLayoutManager);
 
         return view;
+    }
+
+    public void displayData(ArrayList<Event> events){
+
+
+        ArrayList<Event> eventsArray = new ArrayList<>();
+        for (Event entry : events ) {
+            eventsArray.add(entry);
+        }
+        EventAdapter adapter = new EventAdapter(this.getContext(), eventsArray, false);
+        final RecyclerView MyRecyclerView = (RecyclerView) getView().findViewById(R.id.cardView);
+        MyRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager MyLayoutManager = new LinearLayoutManager(getActivity());
+        MyLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        if (listitems.size() > 0 & MyRecyclerView != null) {
+            MyRecyclerView.setAdapter(new MyAdapter(listitems, this.getContext()));
+        }
+        MyRecyclerView.setLayoutManager(MyLayoutManager);
     }
 
     @Override
@@ -112,7 +139,7 @@ public class CardFragment extends Fragment {
             i.putExtra("TITLE_KEY", title);
             i.putExtra("TAG_KEY", tag);
             i.putExtra("POSITION_KEY", position);
-            i.putExtra("EVENT_ID",eventId);
+            i.putExtra("EVENT_ID", eventId);
 
             c.startActivity(i);
         }
@@ -148,29 +175,77 @@ public class CardFragment extends Fragment {
 
 
     public void initializeList() {
-        ArrayList<Event> events = new TableControllerEvents(this.getContext()).read();
+
+        Call<Map<String, Event>> call = remoteService.getAllEvents();
+        call.enqueue(new Callback<Map<String, Event>>() {
+            @Override
+            public void onResponse(Call<Map<String, Event>> call, Response<Map<String, Event>> response) {
+                final Map<String, Event> events = response.body();
+
+                if (events != null && !events.isEmpty()) {
+                    for (Event obj : events.values()) {
+
+                        int id = obj.getIdEvent();
+                        String eventName = obj.getCardName();
+                        int nrOfPeople = obj.getNrOfPeople();
+                        String orgName = obj.getNameOrganizor();
+                        String location = obj.getLocation();
+                        int imageId = obj.getImageResourceId();
+
+                        // To change after added image dbs, maybe
+
+                        obj.setImageResourceId(Images[obj.getImageResourceId()]);
+                        listitems.add(obj);
+
+                    }
+                  //  displayData(listitems);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Map<String, Event>> call, Throwable t) {
+
+            }
+
+        });
+
+
+        /*ArrayList<Event> events = new TableControllerEvents(this.getContext()).read();
         listitems.clear();
         for (Event obj : events) {
 
-            /*int id = obj.getIdEvent();
+            int id = obj.getIdEvent();
             String eventName = obj.getCardName();
             int nrOfPeople = obj.getNrOfPeople();
             String orgName = obj.getNameOrganizor();
             String location = obj.getLocation();
-            int imageId = obj.getImageResourceId();*/
+            int imageId = obj.getImageResourceId();
 
             // To change after added image dbs, maybe
 
             obj.setImageResourceId(Images[obj.getImageResourceId()]);
             listitems.add(obj);
+         }
 
-        }
-
-      /*  for (int i = 0; i < 6; i++) {
+      *//*  for (int i = 0; i < 6; i++) {
             Event item = new Event();
             item.setCardName(Events[i]);
             item.setImageResourceId(Images[i]);
             listitems.add(item);
-        }*/
+        }*//*
+    }*/
+    }
+
+    @Override
+    public void update() {
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this.getContext())
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle("Event Application")
+                .setContentText("This list of events has been modified");
+
+        int mNotificationId = 001;
+        NotificationManager mNotifyMgr = (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
+        mNotifyMgr.notify(mNotificationId,mBuilder.build());
     }
 }

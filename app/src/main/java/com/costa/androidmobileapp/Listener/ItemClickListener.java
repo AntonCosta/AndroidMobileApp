@@ -1,4 +1,4 @@
-package com.costa.androidmobileapp;
+package com.costa.androidmobileapp.Listener;
 
 
 public interface ItemClickListener {
